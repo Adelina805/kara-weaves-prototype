@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
+import { Inconsolata } from "next/font/google";
 import "./globals.css";
+
+const inconsolata = Inconsolata({
+  subsets: ["latin"],
+  variable: "--font-inconsolata",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -15,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inconsolata.variable}>
       <body>{children}</body>
     </html>
   );

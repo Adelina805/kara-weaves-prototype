@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | Route | Purpose |
 |-------|---------|
 | `/` | Prototype index |
-| `/prototype-1` | Textile customization (to be built) |
+| `/prototype-1` | Textile customization — 3-column layout, live SVG preview, spec panel |
 
 ```bash
 npm run build

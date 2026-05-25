@@ -1,0 +1,35 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.card:hover {
+  border-color: var(--color-border-strong);
+}
+
+.card[data-selected] {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.thumb {
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  background: #fff;
+}
+
+.name {
+  font-size: 0.75rem;
+  color: var(--color-text);
+  line-height: 1.3;
+}

@@ -1,24 +1,29 @@
 import Link from "next/link";
-import { PageHeader } from "@/components/PageHeader";
-import styles from "@/styles/page.module.css";
+import { CustomizationWorkspace } from "@/components/CustomizationWorkspace/CustomizationWorkspace";
+import styles from "./prototype-1.module.css";
 
 export const metadata = {
-  title: "Prototype 1",
+  title: "Textile customization",
 };
 
 export default function Prototype1Page() {
   return (
-    <main className={styles.shell}>
-      <PageHeader title="Textile customization" />
+    <div className={styles.shell}>
+      <header className={styles.topBar}>
+        <div>
+          <h1 className={styles.heading}>Textile customization</h1>
+          <p className={styles.context}>
+            Guided pattern planning · constraint-aware preview
+          </p>
+        </div>
+        <Link href="/" className={styles.back}>
+          All prototypes
+        </Link>
+      </header>
 
-      <p className={styles.placeholder}>
-        Placeholder route — add components in <code>src/components/</code>, data
-        in <code>src/data/</code>, and types in <code>src/types/</code>.
-      </p>
-
-      <Link href="/" className={styles.back}>
-        ← All prototypes
-      </Link>
-    </main>
+      <div className={styles.main}>
+        <CustomizationWorkspace />
+      </div>
+    </div>
   );
 }

@@ -1,0 +1,146 @@
+.panel {
+  width: var(--spec-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  border-left: 1px solid var(--color-border);
+  font-size: 0.75rem;
+}
+
+.header {
+  margin: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.subtitle {
+  margin: var(--space-xs) 0 0;
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.section {
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.sectionLabel {
+  margin: 0 0 var(--space-sm);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.row dt {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.row dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  color: var(--color-text);
+  text-align: right;
+}
+
+.layers {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.layerItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.swatch {
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 1px;
+}
+
+.layerMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.layerType {
+  font-size: 0.6875rem;
+  text-transform: capitalize;
+  color: var(--color-text);
+}
+
+.layerDetail {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--color-text-muted);
+}
+
+.colorRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.colorRow dt {
+  margin: 0;
+  text-transform: capitalize;
+  color: var(--color-text-muted);
+}
+
+.colorRow dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+}
+
+.colorRow code {
+  font-size: inherit;
+}
+
+.empty {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
