@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageHeader } from "@/components/PageHeader";
 import styles from "@/styles/page.module.css";
 
 export const metadata = {
@@ -8,14 +9,7 @@ export const metadata = {
 export default function Prototype1Page() {
   return (
     <main className={styles.shell}>
-      <header className={styles.header}>
-        <p className={styles.eyebrow}>Prototype 1</p>
-        <h1 className={styles.title}>Textile customization</h1>
-        <p className={styles.lead}>
-          Build guided customization, SVG textile previews, spec summaries, and
-          soft constraint warnings here.
-        </p>
-      </header>
+      <PageHeader title="Textile customization" />
 
       <p className={styles.placeholder}>
         Placeholder route — add components in <code>src/components/</code>, data

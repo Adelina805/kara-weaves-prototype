@@ -15,7 +15,6 @@ Open [http://localhost:3000](http://localhost:3000).
 |-------|---------|
 | `/` | Prototype index |
 | `/prototype-1` | Textile customization (to be built) |
-| `/prototype-2` | Future experiments |
 
 ```bash
 npm run build
