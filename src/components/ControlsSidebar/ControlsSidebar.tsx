@@ -32,63 +32,72 @@ export function ControlsSidebar({
 }: ControlsSidebarProps) {
   return (
     <aside className={styles.sidebar} aria-label="Customization controls">
-      <SidebarModule label="Loom" compact>
-        <label className={styles.field} htmlFor="loom-width">
-          <select
-            id="loom-width"
-            className={styles.select}
-            aria-label="Loom width"
-            value={state.loomWidth}
-            onChange={(e) => onLoomChange(Number(e.target.value))}
-          >
-            {loomProfiles.map((loom) => (
-              <option key={loom.id} value={loom.widthInches}>
-                {loom.widthInches}″ — {loom.name}
-              </option>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Design workspace</h1>
+        <p className={styles.subtitle}>Configure weave, pattern, and color</p>
+      </header>
+
+      <div className={styles.scroll}>
+        <SidebarModule label="Width / Canvas" compact>
+          <label className={styles.field} htmlFor="loom-width">
+            <select
+              id="loom-width"
+              className={styles.select}
+              aria-label="Loom width"
+              value={state.loomWidth}
+              onChange={(e) => onLoomChange(Number(e.target.value))}
+            >
+              {loomProfiles.map((loom) => (
+                <option key={loom.id} value={loom.widthInches}>
+                  {loom.widthInches}″ — {loom.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </SidebarModule>
+
+        <SidebarModule label="Fabric" compact>
+          <label className={styles.field} htmlFor="fabric-option">
+            <select
+              id="fabric-option"
+              className={styles.select}
+              aria-label="Textile type"
+              value={state.fabricOption}
+              onChange={(e) => onFabricOptionChange(e.target.value)}
+            >
+              {fabricOptions.map((opt) => (
+                <option key={opt.id} value={opt.id}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        </SidebarModule>
+
+        <SidebarModule label="Pattern" compact>
+          <div className={styles.presets}>
+            {textileTemplates.map((template) => (
+              <PatternPresetCard
+                key={template.id}
+                template={template}
+                selected={state.templateId === template.id}
+                colors={state.colors}
+                onSelect={() => onTemplateChange(template.id)}
+              />
             ))}
-          </select>
-        </label>
-      </SidebarModule>
+          </div>
+        </SidebarModule>
 
-      <SidebarModule label="Textile" compact>
-        <label className={styles.field} htmlFor="fabric-option">
-          <select
-            id="fabric-option"
-            className={styles.select}
-            aria-label="Textile type"
-            value={state.fabricOption}
-            onChange={(e) => onFabricOptionChange(e.target.value)}
-          >
-            {fabricOptions.map((opt) => (
-              <option key={opt.id} value={opt.id}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </label>
-      </SidebarModule>
+        <SidebarModule label="Colors" compact>
+          <ColorPalette colors={state.colors} onColorChange={onColorChange} />
+        </SidebarModule>
 
-      <SidebarModule label="Pattern" compact>
-        <div className={styles.presets}>
-          {textileTemplates.map((template) => (
-            <PatternPresetCard
-              key={template.id}
-              template={template}
-              selected={state.templateId === template.id}
-              colors={state.colors}
-              onSelect={() => onTemplateChange(template.id)}
-            />
-          ))}
-        </div>
-      </SidebarModule>
-
-      <SidebarModule label="Yarn colors" compact>
-        <ColorPalette colors={state.colors} onColorChange={onColorChange} />
-      </SidebarModule>
-
-      {warnings.length > 0 && (
-        <WarningCallout warnings={warnings} compact />
-      )}
+        {warnings.length > 0 && (
+          <SidebarModule label="Constraints" compact>
+            <WarningCallout warnings={warnings} compact />
+          </SidebarModule>
+        )}
+      </div>
     </aside>
   );
 }

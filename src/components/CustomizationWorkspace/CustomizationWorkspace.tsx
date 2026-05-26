@@ -7,10 +7,11 @@ import { getTemplateById } from "@/data/templates";
 import type { CustomizationState } from "@/types";
 import { evaluateConstraints } from "@/utils/constraints";
 import { generateSpec } from "@/utils/spec-generation";
+import { AppLayout } from "@/components/AppLayout/AppLayout";
 import { ControlsSidebar } from "@/components/ControlsSidebar/ControlsSidebar";
+import { MainWorkspace } from "@/components/MainWorkspace/MainWorkspace";
 import { SpecPanel } from "@/components/SpecPanel/SpecPanel";
 import { TextilePreview } from "@/components/TextilePreview/TextilePreview";
-import styles from "./CustomizationWorkspace.module.css";
 
 const initialState: CustomizationState = {
   templateId: "simple-stripe",
@@ -28,8 +29,8 @@ export function CustomizationWorkspace() {
   const resolvedLayers = spec?.stripeLayers ?? [];
 
   return (
-    <div className={styles.workspace}>
-      <div className={styles.content}>
+    <AppLayout
+      sidebar={
         <ControlsSidebar
           state={state}
           warnings={warnings}
@@ -52,16 +53,17 @@ export function CustomizationWorkspace() {
             setState((s) => ({ ...s, fabricOption }))
           }
         />
-
-        <main className={styles.previewArea}>
+      }
+    >
+      <MainWorkspace
+        preview={
           <TextilePreview
             layers={resolvedLayers}
             loomWidth={state.loomWidth}
           />
-        </main>
-      </div>
-
-      <SpecPanel spec={spec} />
-    </div>
+        }
+        spec={<SpecPanel spec={spec} />}
+      />
+    </AppLayout>
   );
 }
