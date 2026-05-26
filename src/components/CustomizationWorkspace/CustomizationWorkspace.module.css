@@ -1,8 +1,15 @@
 .workspace {
   display: flex;
+  flex-direction: column;
   flex: 1;
   min-height: 0;
   width: 100%;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
 }
 
 .previewArea {

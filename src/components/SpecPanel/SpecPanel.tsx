@@ -17,19 +17,20 @@ function SpecRow({ label, value }: { label: string; value: string }) {
 export function SpecPanel({ spec }: SpecPanelProps) {
   if (!spec) {
     return (
-      <aside className={styles.panel} aria-label="Weaving specification">
+      <footer className={styles.panel} aria-label="Weaving specification">
         <p className={styles.empty}>Select a pattern to generate spec.</p>
-      </aside>
+      </footer>
     );
   }
 
   return (
-    <aside className={styles.panel} aria-label="Weaving specification">
+    <footer className={styles.panel} aria-label="Weaving specification">
       <header className={styles.header}>
         <h2 className={styles.title}>Recipe</h2>
         <p className={styles.subtitle}>Generated from current settings</p>
       </header>
 
+      <div className={styles.sections}>
       <section className={styles.section}>
         <h3 className={styles.sectionLabel}>Pattern</h3>
         <dl className={styles.dl}>
@@ -80,6 +81,7 @@ export function SpecPanel({ spec }: SpecPanelProps) {
           ))}
         </dl>
       </section>
-    </aside>
+      </div>
+    </footer>
   );
 }

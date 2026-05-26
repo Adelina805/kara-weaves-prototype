@@ -35,42 +35,44 @@ export function CustomizationWorkspace() {
 
   return (
     <div className={styles.workspace}>
-      <ControlsSidebar
-        state={state}
-        recommendedWidth={template?.recommendedWidth}
-        warnings={warnings}
-        onTemplateChange={(templateId) => {
-          const next = getTemplateById(templateId);
-          setState((s) => ({
-            ...s,
-            templateId,
-            loomWidth: next?.recommendedWidth ?? s.loomWidth,
-          }));
-        }}
-        onLoomChange={(loomWidth) => setState((s) => ({ ...s, loomWidth }))}
-        onColorChange={(role, hex) =>
-          setState((s) => ({
-            ...s,
-            colors: { ...s.colors, [role]: hex },
-          }))
-        }
-        onWeaveThicknessChange={(weaveThickness) =>
-          setState((s) => ({ ...s, weaveThickness }))
-        }
-        onTextileCategoryChange={(textileCategory) =>
-          setState((s) => ({ ...s, textileCategory }))
-        }
-        onFabricPresetChange={(fabricPreset) =>
-          setState((s) => ({ ...s, fabricPreset }))
-        }
-      />
-
-      <main className={styles.previewArea}>
-        <TextilePreview
-          layers={resolvedLayers}
-          loomWidth={state.loomWidth}
+      <div className={styles.content}>
+        <ControlsSidebar
+          state={state}
+          recommendedWidth={template?.recommendedWidth}
+          warnings={warnings}
+          onTemplateChange={(templateId) => {
+            const next = getTemplateById(templateId);
+            setState((s) => ({
+              ...s,
+              templateId,
+              loomWidth: next?.recommendedWidth ?? s.loomWidth,
+            }));
+          }}
+          onLoomChange={(loomWidth) => setState((s) => ({ ...s, loomWidth }))}
+          onColorChange={(role, hex) =>
+            setState((s) => ({
+              ...s,
+              colors: { ...s.colors, [role]: hex },
+            }))
+          }
+          onWeaveThicknessChange={(weaveThickness) =>
+            setState((s) => ({ ...s, weaveThickness }))
+          }
+          onTextileCategoryChange={(textileCategory) =>
+            setState((s) => ({ ...s, textileCategory }))
+          }
+          onFabricPresetChange={(fabricPreset) =>
+            setState((s) => ({ ...s, fabricPreset }))
+          }
         />
-      </main>
+
+        <main className={styles.previewArea}>
+          <TextilePreview
+            layers={resolvedLayers}
+            loomWidth={state.loomWidth}
+          />
+        </main>
+      </div>
 
       <SpecPanel spec={spec} />
     </div>
