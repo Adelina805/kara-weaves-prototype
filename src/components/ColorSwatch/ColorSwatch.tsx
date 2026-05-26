@@ -4,8 +4,8 @@ type ColorSwatchProps = {
   hex: string;
   label: string;
   selected?: boolean;
-  /** Default buttons; `row` uses quiet unselected / emphasized selected sizing. */
-  variant?: "default" | "row";
+  /** `picker` — compact shared palette; `row` — legacy per-role strip. */
+  variant?: "default" | "row" | "picker";
   onSelect: () => void;
 };
 

@@ -88,7 +88,7 @@ export function ControlsSidebar({
           </div>
         </SidebarModule>
 
-        <SidebarModule label="Colors" compact>
+        <SidebarModule label="Palette" compact>
           <ColorPalette colors={state.colors} onColorChange={onColorChange} />
         </SidebarModule>
 
