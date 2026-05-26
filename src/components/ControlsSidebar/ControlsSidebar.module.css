@@ -56,6 +56,14 @@
   outline-offset: 1px;
 }
 
+.presetsScroll {
+  max-height: 14rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: calc(-1 * var(--space-sm));
+  padding-right: var(--space-sm);
+}
+
 .presets {
   display: flex;
   flex-direction: column;

@@ -75,16 +75,18 @@ export function ControlsSidebar({
         </SidebarModule>
 
         <SidebarModule label="Pattern" compact>
-          <div className={styles.presets}>
-            {textileTemplates.map((template) => (
-              <PatternPresetCard
-                key={template.id}
-                template={template}
-                selected={state.templateId === template.id}
-                colors={state.colors}
-                onSelect={() => onTemplateChange(template.id)}
-              />
-            ))}
+          <div className={styles.presetsScroll}>
+            <div className={styles.presets}>
+              {textileTemplates.map((template) => (
+                <PatternPresetCard
+                  key={template.id}
+                  template={template}
+                  selected={state.templateId === template.id}
+                  colors={state.colors}
+                  onSelect={() => onTemplateChange(template.id)}
+                />
+              ))}
+            </div>
           </div>
         </SidebarModule>
 
