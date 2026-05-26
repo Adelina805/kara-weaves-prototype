@@ -19,15 +19,12 @@ const initialState: CustomizationState = {
     primary: "#4a4f54",
     accent: "#9a8572",
   },
-  weaveThickness: "standard",
-  textileCategory: "towel",
-  fabricPreset: "bath-towel",
+  fabricOption: "bath-towel",
 };
 
 export function CustomizationWorkspace() {
   const [state, setState] = useState<CustomizationState>(initialState);
 
-  const template = getTemplateById(state.templateId);
   const spec = useMemo(() => generateSpec(state), [state]);
   const warnings = useMemo(() => evaluateConstraints(state), [state]);
 
@@ -38,7 +35,6 @@ export function CustomizationWorkspace() {
       <div className={styles.content}>
         <ControlsSidebar
           state={state}
-          recommendedWidth={template?.recommendedWidth}
           warnings={warnings}
           onTemplateChange={(templateId) => {
             const next = getTemplateById(templateId);
@@ -55,14 +51,8 @@ export function CustomizationWorkspace() {
               colors: { ...s.colors, [role]: hex },
             }))
           }
-          onWeaveThicknessChange={(weaveThickness) =>
-            setState((s) => ({ ...s, weaveThickness }))
-          }
-          onTextileCategoryChange={(textileCategory) =>
-            setState((s) => ({ ...s, textileCategory }))
-          }
-          onFabricPresetChange={(fabricPreset) =>
-            setState((s) => ({ ...s, fabricPreset }))
+          onFabricOptionChange={(fabricOption) =>
+            setState((s) => ({ ...s, fabricOption }))
           }
         />
 

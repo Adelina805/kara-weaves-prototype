@@ -1,11 +1,7 @@
 "use client";
 
 import { customizableColors } from "@/data/color-palettes";
-import {
-  fabricPresetOptions,
-  textileCategoryOptions,
-  weaveThicknessOptions,
-} from "@/data/fabric-options";
+import { fabricOptions } from "@/data/fabric-options";
 import { loomProfiles } from "@/data/loom-profiles";
 import { textileTemplates } from "@/data/templates";
 import type { ConstraintWarning, CustomizationState } from "@/types";
@@ -17,7 +13,6 @@ import styles from "./ControlsSidebar.module.css";
 
 type ControlsSidebarProps = {
   state: CustomizationState;
-  recommendedWidth?: number;
   warnings: ConstraintWarning[];
   onTemplateChange: (templateId: string) => void;
   onLoomChange: (width: number) => void;
@@ -25,65 +20,25 @@ type ControlsSidebarProps = {
     role: keyof CustomizationState["colors"],
     hex: string
   ) => void;
-  onWeaveThicknessChange: (value: string) => void;
-  onTextileCategoryChange: (value: string) => void;
-  onFabricPresetChange: (value: string) => void;
+  onFabricOptionChange: (value: string) => void;
 };
-
-function SelectField({
-  id,
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  id: string;
-  label: string;
-  value: string;
-  options: readonly { id: string; label: string }[];
-  onChange: (value: string) => void;
-}) {
-  return (
-    <label className={styles.field} htmlFor={id}>
-      <span className={styles.fieldLabel}>{label}</span>
-      <select
-        id={id}
-        className={styles.select}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      >
-        {options.map((opt) => (
-          <option key={opt.id} value={opt.id}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
 
 export function ControlsSidebar({
   state,
-  recommendedWidth,
   warnings,
   onTemplateChange,
   onLoomChange,
   onColorChange,
-  onWeaveThicknessChange,
-  onTextileCategoryChange,
-  onFabricPresetChange,
+  onFabricOptionChange,
 }: ControlsSidebarProps) {
-  const canvasHeightIn = 72;
-  const totalPicksEstimate = Math.round(canvasHeightIn * 40);
-
   return (
     <aside className={styles.sidebar} aria-label="Customization controls">
       <SidebarModule label="Width / canvas">
         <label className={styles.field} htmlFor="loom-width">
-          <span className={styles.fieldLabel}>Loom width</span>
           <select
             id="loom-width"
             className={styles.select}
+            aria-label="Loom width"
             value={state.loomWidth}
             onChange={(e) => onLoomChange(Number(e.target.value))}
           >
@@ -94,48 +49,24 @@ export function ControlsSidebar({
             ))}
           </select>
         </label>
-        <dl className={styles.dimensions}>
-          <div>
-            <dt>Canvas</dt>
-            <dd>
-              {state.loomWidth}″ × {canvasHeightIn}″
-            </dd>
-          </div>
-          {recommendedWidth != null && (
-            <div>
-              <dt>Recommended</dt>
-              <dd>{recommendedWidth}″</dd>
-            </div>
-          )}
-          <div>
-            <dt>Est. picks</dt>
-            <dd>{totalPicksEstimate}</dd>
-          </div>
-        </dl>
       </SidebarModule>
 
       <SidebarModule label="Fabric options">
-        <SelectField
-          id="weave-thickness"
-          label="Weave thickness"
-          value={state.weaveThickness}
-          options={weaveThicknessOptions}
-          onChange={onWeaveThicknessChange}
-        />
-        <SelectField
-          id="textile-category"
-          label="Textile category"
-          value={state.textileCategory}
-          options={textileCategoryOptions}
-          onChange={onTextileCategoryChange}
-        />
-        <SelectField
-          id="fabric-preset"
-          label="Preset"
-          value={state.fabricPreset}
-          options={fabricPresetOptions}
-          onChange={onFabricPresetChange}
-        />
+        <label className={styles.field} htmlFor="fabric-option">
+          <select
+            id="fabric-option"
+            className={styles.select}
+            aria-label="Fabric options"
+            value={state.fabricOption}
+            onChange={(e) => onFabricOptionChange(e.target.value)}
+          >
+            {fabricOptions.map((opt) => (
+              <option key={opt.id} value={opt.id}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </label>
       </SidebarModule>
 
       <SidebarModule label="Pattern presets">

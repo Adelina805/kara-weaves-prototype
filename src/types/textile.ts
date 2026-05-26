@@ -48,9 +48,7 @@ export interface CustomizationState {
     primary: string;
     accent: string;
   };
-  weaveThickness: string;
-  textileCategory: string;
-  fabricPreset: string;
+  fabricOption: string;
 }
 
 export interface ResolvedStripeLayer {

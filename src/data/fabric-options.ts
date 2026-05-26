@@ -1,19 +1,49 @@
-export const weaveThicknessOptions = [
-  { id: "light", label: "Light weave" },
-  { id: "standard", label: "Standard" },
-  { id: "dense", label: "Dense / towel weight" },
+export type FabricOption = {
+  id: string;
+  label: string;
+  weaveThickness: string;
+  textileCategory: string;
+  fabricPreset: string;
+};
+
+export const fabricOptions: readonly FabricOption[] = [
+  {
+    id: "bath-towel",
+    label: "Bath towel",
+    weaveThickness: "dense",
+    textileCategory: "towel",
+    fabricPreset: "bath-towel",
+  },
+  {
+    id: "hand-towel",
+    label: "Hand towel",
+    weaveThickness: "dense",
+    textileCategory: "towel",
+    fabricPreset: "hand-towel",
+  },
+  {
+    id: "hospitality-set",
+    label: "Hospitality set",
+    weaveThickness: "standard",
+    textileCategory: "hospitality",
+    fabricPreset: "hospitality-set",
+  },
+  {
+    id: "table-runner",
+    label: "Table runner",
+    weaveThickness: "standard",
+    textileCategory: "runner",
+    fabricPreset: "table-runner",
+  },
+  {
+    id: "light-scarf",
+    label: "Light scarf",
+    weaveThickness: "light",
+    textileCategory: "scarf",
+    fabricPreset: "scarf-light",
+  },
 ] as const;
 
-export const textileCategoryOptions = [
-  { id: "towel", label: "Towel" },
-  { id: "runner", label: "Runner" },
-  { id: "scarf", label: "Scarf" },
-  { id: "hospitality", label: "Hospitality linen" },
-] as const;
-
-export const fabricPresetOptions = [
-  { id: "hospitality-set", label: "Hospitality set" },
-  { id: "bath-towel", label: "Bath towel" },
-  { id: "hand-towel", label: "Hand towel" },
-  { id: "scarf-light", label: "Light scarf" },
-] as const;
+export function getFabricOptionById(id: string): FabricOption | undefined {
+  return fabricOptions.find((opt) => opt.id === id);
+}
