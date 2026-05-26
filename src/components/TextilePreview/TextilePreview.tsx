@@ -140,9 +140,6 @@ export function TextilePreview({ layers, loomWidth }: TextilePreviewProps) {
             offsetY={top.height}
           />
         </svg>
-        <figcaption className={styles.caption}>
-          Upper field · repeat ×3 — lower selvedge · repeat ×1
-        </figcaption>
       </figure>
     </div>
   );

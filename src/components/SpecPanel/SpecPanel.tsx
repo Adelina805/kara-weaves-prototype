@@ -28,7 +28,7 @@ export function SpecPanel({ spec }: SpecPanelProps) {
   return (
     <footer className={styles.panel} aria-label="Weaving specification">
       <header className={styles.header}>
-        <h2 className={styles.title}>Recipe</h2>
+        <h2 className={styles.title}>Recipe Card</h2>
         <p className={styles.subtitle}>Generated from current settings</p>
       </header>
 
