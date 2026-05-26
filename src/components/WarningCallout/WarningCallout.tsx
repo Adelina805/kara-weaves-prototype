@@ -3,15 +3,20 @@ import styles from "./WarningCallout.module.css";
 
 type WarningCalloutProps = {
   warnings: ConstraintWarning[];
+  compact?: boolean;
 };
 
-export function WarningCallout({ warnings }: WarningCalloutProps) {
+export function WarningCallout({
+  warnings,
+  compact = false,
+}: WarningCalloutProps) {
   const primary = warnings[0];
   if (!primary) return null;
 
   return (
     <aside
       className={styles.callout}
+      data-compact={compact || undefined}
       data-severity={primary.severity}
       aria-live="polite"
     >

@@ -40,16 +40,20 @@ export interface ConstraintWarning {
   message: string;
 }
 
+export type EditableColorRole = "base" | "primary" | "accent";
+
 export interface CustomizationState {
   templateId: string;
   loomWidth: number;
-  colors: {
-    base: string;
-    primary: string;
-    accent: string;
-  };
+  colors: Record<EditableColorRole, string>;
   fabricOption: string;
 }
+
+export type YarnColor = {
+  id: string;
+  name: string;
+  hex: string;
+};
 
 export interface ResolvedStripeLayer {
   type: StripeLayerType;

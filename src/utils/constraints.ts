@@ -24,7 +24,7 @@ export function evaluateConstraints(
       severity: "warning",
       title: "Low contrast between stripes",
       message:
-        "Base and primary colors are very close. Stripes may read softly on the loom — consider more separation.",
+        "Base and stripe colors are very close. Stripes may read softly on the loom — consider more separation.",
     });
   }
 

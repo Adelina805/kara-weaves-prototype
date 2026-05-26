@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { defaultYarnSelections } from "@/data/yarn-colors";
 import { defaultLoomWidth } from "@/data/loom-profiles";
 import { getTemplateById } from "@/data/templates";
 import type { CustomizationState } from "@/types";
@@ -14,11 +15,7 @@ import styles from "./CustomizationWorkspace.module.css";
 const initialState: CustomizationState = {
   templateId: "simple-stripe",
   loomWidth: defaultLoomWidth,
-  colors: {
-    base: "#f4f1ec",
-    primary: "#4a4f54",
-    accent: "#9a8572",
-  },
+  colors: { ...defaultYarnSelections },
   fabricOption: "bath-towel",
 };
 

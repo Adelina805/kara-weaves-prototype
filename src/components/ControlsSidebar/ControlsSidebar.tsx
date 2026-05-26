@@ -1,11 +1,10 @@
 "use client";
 
-import { customizableColors } from "@/data/color-palettes";
 import { fabricOptions } from "@/data/fabric-options";
 import { loomProfiles } from "@/data/loom-profiles";
 import { textileTemplates } from "@/data/templates";
 import type { ConstraintWarning, CustomizationState } from "@/types";
-import { ColorSwatch } from "@/components/ColorSwatch/ColorSwatch";
+import { ColorPalette } from "@/components/ColorPalette/ColorPalette";
 import { PatternPresetCard } from "@/components/PatternPresetCard/PatternPresetCard";
 import { SidebarModule } from "@/components/SidebarModule/SidebarModule";
 import { WarningCallout } from "@/components/WarningCallout/WarningCallout";
@@ -33,7 +32,7 @@ export function ControlsSidebar({
 }: ControlsSidebarProps) {
   return (
     <aside className={styles.sidebar} aria-label="Customization controls">
-      <SidebarModule label="Width / canvas">
+      <SidebarModule label="Loom" compact>
         <label className={styles.field} htmlFor="loom-width">
           <select
             id="loom-width"
@@ -51,12 +50,12 @@ export function ControlsSidebar({
         </label>
       </SidebarModule>
 
-      <SidebarModule label="Fabric options">
+      <SidebarModule label="Textile" compact>
         <label className={styles.field} htmlFor="fabric-option">
           <select
             id="fabric-option"
             className={styles.select}
-            aria-label="Fabric options"
+            aria-label="Textile type"
             value={state.fabricOption}
             onChange={(e) => onFabricOptionChange(e.target.value)}
           >
@@ -69,7 +68,7 @@ export function ControlsSidebar({
         </label>
       </SidebarModule>
 
-      <SidebarModule label="Pattern presets">
+      <SidebarModule label="Pattern" compact>
         <div className={styles.presets}>
           {textileTemplates.map((template) => (
             <PatternPresetCard
@@ -83,27 +82,12 @@ export function ControlsSidebar({
         </div>
       </SidebarModule>
 
-      <SidebarModule label="Colors">
-        {(["base", "primary", "accent"] as const).map((role) => (
-          <div key={role} className={styles.colorGroup}>
-            <span className={styles.fieldLabel}>{role}</span>
-            <div className={styles.swatches} role="group" aria-label={role}>
-              {customizableColors[role].map((swatch) => (
-                <ColorSwatch
-                  key={swatch.id}
-                  hex={swatch.hex}
-                  label={swatch.label}
-                  selected={state.colors[role] === swatch.hex}
-                  onSelect={() => onColorChange(role, swatch.hex)}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
+      <SidebarModule label="Yarn colors" compact>
+        <ColorPalette colors={state.colors} onColorChange={onColorChange} />
       </SidebarModule>
 
       {warnings.length > 0 && (
-        <WarningCallout warnings={warnings} />
+        <WarningCallout warnings={warnings} compact />
       )}
     </aside>
   );

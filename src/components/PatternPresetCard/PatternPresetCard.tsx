@@ -20,7 +20,7 @@ function MiniStripePreview({
   const segments = template.layers.reduce<
     { y: number; h: number; fill: string }[]
   >((acc, layer) => {
-    const h = (layer.heightInches / total) * 40;
+    const h = (layer.heightInches / total) * 32;
     const y = acc.reduce((sum, seg) => sum + seg.h, 0);
     return [
       ...acc,
@@ -32,7 +32,7 @@ function MiniStripePreview({
       key={i}
       x={0}
       y={seg.y}
-      width={56}
+      width={48}
       height={seg.h}
       fill={seg.fill}
     />
@@ -40,9 +40,9 @@ function MiniStripePreview({
 
   return (
     <svg
-      viewBox="0 0 56 40"
-      width={56}
-      height={40}
+      viewBox="0 0 48 32"
+      width={48}
+      height={32}
       className={styles.thumb}
       aria-hidden
     >

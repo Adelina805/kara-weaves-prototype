@@ -1,4 +1,6 @@
-import type { GeneratedSpec } from "@/types";
+import { getColorRoleLabel } from "@/data/color-roles";
+import { getYarnColorByHex } from "@/data/yarn-colors";
+import type { EditableColorRole, GeneratedSpec } from "@/types";
 import styles from "./SpecPanel.module.css";
 
 type SpecPanelProps = {
@@ -66,19 +68,23 @@ export function SpecPanel({ spec }: SpecPanelProps) {
       <section className={styles.section}>
         <h3 className={styles.sectionLabel}>Colors</h3>
         <dl className={styles.dl}>
-          {Object.entries(spec.colors).map(([role, hex]) => (
-            <div key={role} className={styles.colorRow}>
-              <dt>{role}</dt>
-              <dd>
-                <span
-                  className={styles.swatch}
-                  style={{ backgroundColor: hex }}
-                  aria-hidden
-                />
-                <code>{hex}</code>
-              </dd>
-            </div>
-          ))}
+          {Object.entries(spec.colors).map(([role, hex]) => {
+            const yarn = getYarnColorByHex(hex);
+            const label = getColorRoleLabel(role as EditableColorRole);
+            return (
+              <div key={role} className={styles.colorRow}>
+                <dt>{label}</dt>
+                <dd>
+                  <span
+                    className={styles.swatch}
+                    style={{ backgroundColor: hex }}
+                    aria-hidden
+                  />
+                  <code>{yarn?.name ?? hex}</code>
+                </dd>
+              </div>
+            );
+          })}
         </dl>
       </section>
       </div>

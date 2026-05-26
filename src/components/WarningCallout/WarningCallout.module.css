@@ -30,3 +30,18 @@
   font-size: 0.625rem;
   color: var(--color-text-subtle);
 }
+
+.callout[data-compact] {
+  padding: 0.5rem 0.625rem;
+  font-size: 0.6875rem;
+  line-height: 1.35;
+}
+
+.callout[data-compact] .title {
+  margin-bottom: 0.125rem;
+  font-size: 0.5625rem;
+}
+
+.callout[data-compact] .more {
+  margin-top: 0.25rem;
+}
