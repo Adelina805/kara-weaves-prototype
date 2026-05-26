@@ -16,17 +16,18 @@ function MiniStripePreview({
   template: TextileTemplate;
   colors: PatternPresetCardProps["colors"];
 }) {
+  const thumbHeight = 32;
   const total = template.layers.reduce((s, l) => s + l.heightInches, 0);
-  const segments = template.layers.reduce<
-    { y: number; h: number; fill: string }[]
-  >((acc, layer) => {
-    const h = (layer.heightInches / total) * 32;
-    const y = acc.reduce((sum, seg) => sum + seg.h, 0);
-    return [
-      ...acc,
-      { y, h, fill: resolveColor(layer.colorRole, colors) },
-    ];
-  }, []);
+  let y = 0;
+  const segments = template.layers.map((layer, index, layers) => {
+    const isLast = index === layers.length - 1;
+    const h = isLast
+      ? thumbHeight - y
+      : (layer.heightInches / total) * thumbHeight;
+    const segment = { y, h, fill: resolveColor(layer.colorRole, colors) };
+    y += h;
+    return segment;
+  });
   const bands = segments.map((seg, i) => (
     <rect
       key={i}

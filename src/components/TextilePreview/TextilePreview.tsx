@@ -1,6 +1,8 @@
+import type { CSSProperties } from "react";
 import type { ResolvedStripeLayer } from "@/types";
 import {
   layersToPreviewSections,
+  PREVIEW_HEIGHT,
   type PreviewBand,
 } from "@/utils/pattern-renderer";
 import styles from "./TextilePreview.module.css";
@@ -88,8 +90,15 @@ function StripeBands({
 }
 
 export function TextilePreview({ layers, loomWidth }: TextilePreviewProps) {
-  const { width, top, bottom, totalHeight } =
-    layersToPreviewSections(layers);
+  const { width: previewWidth, top, bottom } = layersToPreviewSections(
+    layers,
+    { loomWidth }
+  );
+
+  const canvasStyle = {
+    "--preview-canvas-width": `${previewWidth}px`,
+    "--preview-aspect-ratio": `${previewWidth} / ${PREVIEW_HEIGHT}`,
+  } as CSSProperties;
 
   return (
     <div className={styles.wrap}>
@@ -101,25 +110,25 @@ export function TextilePreview({ layers, loomWidth }: TextilePreviewProps) {
       </div>
       <figure className={styles.figure}>
         <svg
-          viewBox={`0 0 ${width} ${totalHeight}`}
-          width={width}
-          height={totalHeight}
+          viewBox={`0 0 ${previewWidth} ${PREVIEW_HEIGHT}`}
           className={styles.canvas}
+          style={canvasStyle}
           role="img"
           aria-label="Woven stripe textile preview"
+          preserveAspectRatio="xMidYMid meet"
         >
           <rect
             x={0}
             y={0}
-            width={width}
-            height={totalHeight}
+            width={previewWidth}
+            height={PREVIEW_HEIGHT}
             fill="#ffffff"
           />
-          <StripeBands bands={top.bands} width={width} offsetY={0} />
+          <StripeBands bands={top.bands} width={previewWidth} offsetY={0} />
           <line
             x1={0}
             y1={top.height}
-            x2={width}
+            x2={previewWidth}
             y2={top.height}
             stroke="#e5e3df"
             strokeWidth={0.5}
@@ -127,7 +136,7 @@ export function TextilePreview({ layers, loomWidth }: TextilePreviewProps) {
           />
           <StripeBands
             bands={bottom.bands}
-            width={width}
+            width={previewWidth}
             offsetY={top.height}
           />
         </svg>

@@ -21,9 +21,9 @@ export const karaWeavesYarnColors: YarnColor[] = [
 ];
 
 export const defaultYarnSelections = {
-  base: "#E8C4A0",
-  primary: "#2A3D5C",
-  accent: "#C4A035",
+  base: "#FFFFFF",
+  primary: "#1A1A1A",
+  accent: "#2A3D5C",
 } as const;
 
 export function getYarnColorByHex(hex: string): YarnColor | undefined {

@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { defaultYarnSelections } from "@/data/yarn-colors";
 import { defaultLoomWidth } from "@/data/loom-profiles";
-import { getTemplateById } from "@/data/templates";
 import type { CustomizationState } from "@/types";
 import { evaluateConstraints } from "@/utils/constraints";
 import { generateSpec } from "@/utils/spec-generation";
@@ -35,12 +34,7 @@ export function CustomizationWorkspace() {
           state={state}
           warnings={warnings}
           onTemplateChange={(templateId) => {
-            const next = getTemplateById(templateId);
-            setState((s) => ({
-              ...s,
-              templateId,
-              loomWidth: next?.recommendedWidth ?? s.loomWidth,
-            }));
+            setState((s) => ({ ...s, templateId }));
           }}
           onLoomChange={(loomWidth) => setState((s) => ({ ...s, loomWidth }))}
           onColorChange={(role, hex) =>
