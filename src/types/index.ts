@@ -1,10 +1,10 @@
 export type {
+  CanvasSizePreset,
   ColorRole,
   ConstraintWarning,
   CustomizationState,
   EditableColorRole,
   GeneratedSpec,
-  LoomProfile,
   ResolvedStripeLayer,
   StripeLayer,
   StripeLayerType,

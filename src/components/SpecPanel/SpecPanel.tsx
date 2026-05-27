@@ -37,7 +37,10 @@ export function SpecPanel({ spec }: SpecPanelProps) {
         <h3 className={styles.sectionLabel}>Pattern</h3>
         <dl className={styles.dl}>
           <SpecRow label="Template" value={spec.templateName} />
-          <SpecRow label="Loom width" value={`${spec.loomWidth}″`} />
+          <SpecRow
+            label="Finished size"
+            value={`${spec.loomWidth}″ × ${spec.canvasHeightInches}″`}
+          />
           <SpecRow label="PPI" value={String(spec.ppi)} />
           <SpecRow label="Total picks" value={String(spec.totalPicks)} />
         </dl>

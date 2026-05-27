@@ -1,7 +1,7 @@
 "use client";
 
+import { canvasSizePresets } from "@/data/canvas-size-presets";
 import { fabricOptions } from "@/data/fabric-options";
-import { loomProfiles } from "@/data/loom-profiles";
 import { textileTemplates } from "@/data/templates";
 import type { ConstraintWarning, CustomizationState } from "@/types";
 import { ColorPalette } from "@/components/ColorPalette/ColorPalette";
@@ -14,7 +14,7 @@ type ControlsSidebarProps = {
   state: CustomizationState;
   warnings: ConstraintWarning[];
   onTemplateChange: (templateId: string) => void;
-  onLoomChange: (width: number) => void;
+  onCanvasPresetChange: (presetId: string) => void;
   onColorChange: (
     role: keyof CustomizationState["colors"],
     hex: string
@@ -26,7 +26,7 @@ export function ControlsSidebar({
   state,
   warnings,
   onTemplateChange,
-  onLoomChange,
+  onCanvasPresetChange,
   onColorChange,
   onFabricOptionChange,
 }: ControlsSidebarProps) {
@@ -39,17 +39,17 @@ export function ControlsSidebar({
 
       <div className={styles.scroll}>
         <SidebarModule label="Width / Canvas" compact>
-          <label className={styles.field} htmlFor="loom-width">
+          <label className={styles.field} htmlFor="canvas-preset">
             <select
-              id="loom-width"
+              id="canvas-preset"
               className={styles.select}
-              aria-label="Loom width"
-              value={state.loomWidth}
-              onChange={(e) => onLoomChange(Number(e.target.value))}
+              aria-label="Canvas size preset"
+              value={state.canvasPresetId}
+              onChange={(e) => onCanvasPresetChange(e.target.value)}
             >
-              {loomProfiles.map((loom) => (
-                <option key={loom.id} value={loom.widthInches}>
-                  {loom.widthInches}″ — {loom.name}
+              {canvasSizePresets.map((preset) => (
+                <option key={preset.id} value={preset.id}>
+                  {preset.label}
                 </option>
               ))}
             </select>

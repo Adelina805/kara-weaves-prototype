@@ -1,6 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import {
+  defaultCanvasPresetId,
+  getCanvasPresetById,
+} from "@/data/canvas-size-presets";
 import { defaultYarnSelections } from "@/data/yarn-colors";
 import { defaultLoomWidth } from "@/data/loom-profiles";
 import type { CustomizationState } from "@/types";
@@ -12,9 +16,13 @@ import { MainWorkspace } from "@/components/MainWorkspace/MainWorkspace";
 import { SpecPanel } from "@/components/SpecPanel/SpecPanel";
 import { TextilePreview } from "@/components/TextilePreview/TextilePreview";
 
+const defaultCanvas = getCanvasPresetById(defaultCanvasPresetId);
+
 const initialState: CustomizationState = {
   templateId: "simple-stripe",
-  loomWidth: defaultLoomWidth,
+  canvasPresetId: defaultCanvasPresetId,
+  loomWidth: defaultCanvas?.widthInches ?? defaultLoomWidth,
+  canvasHeightInches: defaultCanvas?.heightInches ?? defaultLoomWidth,
   colors: { ...defaultYarnSelections },
   fabricOption: "bath-towel",
 };
@@ -36,7 +44,16 @@ export function CustomizationWorkspace() {
           onTemplateChange={(templateId) => {
             setState((s) => ({ ...s, templateId }));
           }}
-          onLoomChange={(loomWidth) => setState((s) => ({ ...s, loomWidth }))}
+          onCanvasPresetChange={(presetId) => {
+            const preset = getCanvasPresetById(presetId);
+            if (!preset) return;
+            setState((s) => ({
+              ...s,
+              canvasPresetId: preset.id,
+              loomWidth: preset.widthInches,
+              canvasHeightInches: preset.heightInches,
+            }));
+          }}
           onColorChange={(role, hex) =>
             setState((s) => ({
               ...s,
@@ -54,6 +71,7 @@ export function CustomizationWorkspace() {
           <TextilePreview
             layers={resolvedLayers}
             loomWidth={state.loomWidth}
+            canvasHeightInches={state.canvasHeightInches}
           />
         }
         spec={<SpecPanel spec={spec} />}

@@ -38,7 +38,7 @@ npx vercel
 src/
 ├── app/           # Routes (App Router)
 ├── components/    # Reusable UI
-├── data/          # Templates, palettes, loom profiles
+├── data/          # Templates, palettes, canvas size presets
 ├── types/         # TypeScript models
 ├── utils/         # Spec generation, constraints, rendering helpers
 └── styles/        # Design tokens and shared CSS Modules

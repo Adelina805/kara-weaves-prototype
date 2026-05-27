@@ -43,6 +43,7 @@ export function generateSpec(state: CustomizationState): GeneratedSpec | null {
   return {
     templateName: template.name,
     loomWidth: state.loomWidth,
+    canvasHeightInches: state.canvasHeightInches,
     ppi: template.ppi,
     stripeLayers,
     totalPicks,

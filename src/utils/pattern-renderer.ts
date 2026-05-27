@@ -14,17 +14,28 @@ export interface PreviewSection {
 }
 
 export const PREVIEW_WIDTH = 320;
+/** @deprecated Use per-canvas height from `layersToPreviewSections`; kept for CSS fallbacks. */
 export const PREVIEW_HEIGHT = 280;
-const PREVIEW_TOP_HEIGHT = Math.round(PREVIEW_HEIGHT * 0.72);
 
 export function getPreviewWidthForLoom(loomWidth: number): number {
   return Math.round(PREVIEW_WIDTH * (loomWidth / defaultLoomWidth));
+}
+
+/** Pixel height for preview SVG from piece width/height aspect ratio. */
+export function getPreviewCanvasHeight(
+  loomWidth: number,
+  canvasHeightInches: number
+): number {
+  const w = loomWidth > 0 ? loomWidth : defaultLoomWidth;
+  const previewWidth = getPreviewWidthForLoom(w);
+  return Math.max(48, Math.round(previewWidth * (canvasHeightInches / w)));
 }
 
 export function layersToPreviewSections(
   layers: ResolvedStripeLayer[],
   options?: {
     loomWidth?: number;
+    canvasHeightInches?: number;
     topRepeats?: number;
     bottomRepeats?: number;
     splitRatio?: number;
@@ -35,7 +46,13 @@ export function layersToPreviewSections(
   bottom: PreviewSection;
   totalHeight: number;
 } {
-  const previewWidth = getPreviewWidthForLoom(options?.loomWidth ?? defaultLoomWidth);
+  const loomW = options?.loomWidth ?? defaultLoomWidth;
+  const previewWidth = getPreviewWidthForLoom(loomW);
+  const canvasH =
+    options?.canvasHeightInches ?? (loomW > 0 ? loomW : defaultLoomWidth);
+  const previewCanvasHeight = getPreviewCanvasHeight(loomW, canvasH);
+  const previewTopHeight = Math.round(previewCanvasHeight * 0.72);
+
   const topRepeats = options?.topRepeats ?? 3;
   const bottomRepeats = options?.bottomRepeats ?? 1;
   const splitRatio = options?.splitRatio ?? 0.72;
@@ -67,8 +84,10 @@ export function layersToPreviewSections(
   const top = buildSection(topRepeats);
   const bottom = buildSection(bottomRepeats);
   const topTarget =
-    splitRatio === 0.72 ? PREVIEW_TOP_HEIGHT : PREVIEW_HEIGHT * splitRatio;
-  const bottomTarget = PREVIEW_HEIGHT - topTarget;
+    splitRatio === 0.72
+      ? previewTopHeight
+      : previewCanvasHeight * splitRatio;
+  const bottomTarget = previewCanvasHeight - topTarget;
 
   const scaleSection = (
     section: PreviewSection,
@@ -98,7 +117,7 @@ export function layersToPreviewSections(
     width: previewWidth,
     top: scaledTop,
     bottom: scaledBottom,
-    totalHeight: PREVIEW_HEIGHT,
+    totalHeight: previewCanvasHeight,
   };
 }
 

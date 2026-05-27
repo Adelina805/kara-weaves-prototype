@@ -25,10 +25,13 @@ export interface TextileTemplate {
   tags?: string[];
 }
 
-export interface LoomProfile {
+/** Finished-piece canvas preset (width × height in inches). */
+export interface CanvasSizePreset {
   id: string;
-  name: string;
+  /** Display string for selects, e.g. 18″ × 28″ — Kitchen towel */
+  label: string;
   widthInches: number;
+  heightInches: number;
   maxColors: number;
   notes?: string;
 }
@@ -44,7 +47,12 @@ export type EditableColorRole = "base" | "primary" | "accent";
 
 export interface CustomizationState {
   templateId: string;
+  /** Selected canvas preset id (`canvas-size-presets`). */
+  canvasPresetId: string;
+  /** Piece width in inches (warp / reed width); matches preset width. */
   loomWidth: number;
+  /** Finished piece height in inches (length); matches preset height. */
+  canvasHeightInches: number;
   colors: Record<EditableColorRole, string>;
   fabricOption: string;
 }
@@ -67,6 +75,7 @@ export interface ResolvedStripeLayer {
 export interface GeneratedSpec {
   templateName: string;
   loomWidth: number;
+  canvasHeightInches: number;
   ppi: number;
   stripeLayers: ResolvedStripeLayer[];
   totalPicks: number;

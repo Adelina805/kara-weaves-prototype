@@ -2,7 +2,6 @@ import type { CSSProperties } from "react";
 import type { ResolvedStripeLayer } from "@/types";
 import {
   layersToPreviewSections,
-  PREVIEW_HEIGHT,
   type PreviewBand,
 } from "@/utils/pattern-renderer";
 import styles from "./TextilePreview.module.css";
@@ -10,6 +9,7 @@ import styles from "./TextilePreview.module.css";
 type TextilePreviewProps = {
   layers: ResolvedStripeLayer[];
   loomWidth: number;
+  canvasHeightInches: number;
 };
 
 function WeaveLines({
@@ -89,15 +89,20 @@ function StripeBands({
   );
 }
 
-export function TextilePreview({ layers, loomWidth }: TextilePreviewProps) {
-  const { width: previewWidth, top, bottom } = layersToPreviewSections(
-    layers,
-    { loomWidth }
-  );
+export function TextilePreview({
+  layers,
+  loomWidth,
+  canvasHeightInches,
+}: TextilePreviewProps) {
+  const { width: previewWidth, top, bottom, totalHeight } =
+    layersToPreviewSections(layers, {
+      loomWidth,
+      canvasHeightInches,
+    });
 
   const canvasStyle = {
     "--preview-canvas-width": `${previewWidth}px`,
-    "--preview-aspect-ratio": `${previewWidth} / ${PREVIEW_HEIGHT}`,
+    "--preview-aspect-ratio": `${previewWidth} / ${totalHeight}`,
   } as CSSProperties;
 
   return (
@@ -105,12 +110,12 @@ export function TextilePreview({ layers, loomWidth }: TextilePreviewProps) {
       <div className={styles.meta}>
         <span className={styles.metaLabel}>Preview</span>
         <span className={styles.metaValue}>
-          {loomWidth}″ loom · SVG mockup
+          {loomWidth}″ × {canvasHeightInches}″ canvas · SVG mockup
         </span>
       </div>
       <figure className={styles.figure}>
         <svg
-          viewBox={`0 0 ${previewWidth} ${PREVIEW_HEIGHT}`}
+          viewBox={`0 0 ${previewWidth} ${totalHeight}`}
           className={styles.canvas}
           style={canvasStyle}
           role="img"
@@ -121,7 +126,7 @@ export function TextilePreview({ layers, loomWidth }: TextilePreviewProps) {
             x={0}
             y={0}
             width={previewWidth}
-            height={PREVIEW_HEIGHT}
+            height={totalHeight}
             fill="#ffffff"
           />
           <StripeBands bands={top.bands} width={previewWidth} offsetY={0} />
