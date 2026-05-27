@@ -19,14 +19,14 @@
 }
 
 .metaLabel {
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-subtle);
 }
 
 .metaValue {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-family: var(--font-mono);
   color: var(--color-text-muted);
 }

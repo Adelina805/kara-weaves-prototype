@@ -9,9 +9,9 @@
   --color-selected-ring: #1c1b19;
   --color-callout-bg: #f0eeea;
 
-  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-heading: var(--font-inconsolata), ui-monospace, monospace;
-  --font-mono: ui-monospace, "SF Mono", monospace;
+  --font-sans: var(--font-inconsolata), ui-monospace, monospace;
+  --font-heading: var(--font-quantico), system-ui, sans-serif;
+  --font-mono: var(--font-inconsolata), ui-monospace, monospace;
 
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;

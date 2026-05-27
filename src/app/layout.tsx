@@ -1,10 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Inconsolata } from "next/font/google";
+import { Inconsolata, Quantico } from "next/font/google";
 import "./globals.css";
 
 const inconsolata = Inconsolata({
   subsets: ["latin"],
   variable: "--font-inconsolata",
+});
+
+const quantico = Quantico({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-quantico",
 });
 
 export const viewport: Viewport = {
@@ -26,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inconsolata.variable}>
+    <html lang="en" className={`${inconsolata.variable} ${quantico.variable}`}>
       <body>{children}</body>
     </html>
   );

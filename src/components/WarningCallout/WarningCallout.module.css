@@ -2,7 +2,7 @@
   padding: var(--space-sm);
   border-left: 2px solid var(--color-border-strong);
   background: var(--color-callout-bg);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: 1.45;
 }
 
@@ -12,7 +12,7 @@
 
 .title {
   margin: 0 0 var(--space-xs);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -26,19 +26,19 @@
 
 .more {
   margin: var(--space-sm) 0 0;
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   color: var(--color-text-subtle);
 }
 
 .callout[data-compact] {
   padding: var(--space-sm);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   line-height: 1.35;
 }
 
 .callout[data-compact] .title {
   margin-bottom: 0.125rem;
-  font-size: 0.5625rem;
+  font-size: 0.625rem;
 }
 
 .callout[data-compact] .more {

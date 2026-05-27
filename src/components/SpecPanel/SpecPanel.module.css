@@ -4,7 +4,7 @@
   gap: var(--space-lg);
   width: 100%;
   padding: var(--space-xl);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
 }
 
 .header {
@@ -13,7 +13,7 @@
 
 .title {
   margin: 0;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -22,7 +22,7 @@
 
 .subtitle {
   margin: var(--space-xs) 0 0;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
   line-height: 1.4;
 }
@@ -42,7 +42,7 @@
 
 .sectionLabel {
   margin: 0 0 var(--space-sm);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -106,14 +106,14 @@
 }
 
 .layerType {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   text-transform: capitalize;
   color: var(--color-text);
 }
 
 .layerDetail {
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   color: var(--color-text-muted);
 }
 
@@ -136,7 +136,7 @@
   align-items: center;
   gap: var(--space-xs);
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
 }
 
 .colorRow code {
@@ -145,6 +145,6 @@
 
 .empty {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--color-text-muted);
 }
