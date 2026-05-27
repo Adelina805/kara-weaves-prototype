@@ -42,6 +42,48 @@ export const fabricOptions: readonly FabricOption[] = [
     textileCategory: "scarf",
     fabricPreset: "scarf-light",
   },
+  {
+    id: "kitchen-towel",
+    label: "Kitchen / Tea towel",
+    weaveThickness: "standard",
+    textileCategory: "towel",
+    fabricPreset: "kitchen-towel",
+  },
+  {
+    id: "napkin",
+    label: "Table napkin",
+    weaveThickness: "light",
+    textileCategory: "napkin",
+    fabricPreset: "napkin",
+  },
+  {
+    id: "tiny-towel",
+    label: "Tiny / Travel towel",
+    weaveThickness: "light",
+    textileCategory: "towel",
+    fabricPreset: "tiny-towel",
+  },
+  {
+    id: "large-textile",
+    label: "Large textile / throw",
+    weaveThickness: "dense",
+    textileCategory: "textile",
+    fabricPreset: "large-textile",
+  },
+  {
+    id: "robe",
+    label: "Robe",
+    weaveThickness: "dense",
+    textileCategory: "clothing",
+    fabricPreset: "robe",
+  },
+  {
+    id: "coaster",
+    label: "Coaster",
+    weaveThickness: "light",
+    textileCategory: "accessory",
+    fabricPreset: "coaster",
+  },
 ] as const;
 
 export function getFabricOptionById(id: string): FabricOption | undefined {
