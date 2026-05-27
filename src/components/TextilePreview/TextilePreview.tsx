@@ -12,6 +12,45 @@ type TextilePreviewProps = {
   canvasHeightInches: number;
 };
 
+function WarpLines({
+  x,
+  y,
+  width,
+  height,
+}: {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}) {
+  const lines: { x: number; opacity: number }[] = [];
+  const step = Math.max(4, width / 18);
+  for (let lx = x + step / 2; lx < x + width; lx += step) {
+    lines.push({
+      x: lx,
+      opacity: 0.04 + ((Math.floor(lx) % 5) * 0.01 + ((lx / step) % 1) * 0.01),
+    });
+  }
+  return (
+    <>
+      {lines.map((line, i) => (
+        <line
+          key={i}
+          x1={line.x}
+          y1={y}
+          x2={line.x}
+          y2={y + height}
+          stroke="#211e1a"
+          strokeOpacity={line.opacity}
+          strokeWidth={0.4}
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+        />
+      ))}
+    </>
+  );
+}
+
 function WeaveLines({
   x,
   y,
@@ -26,7 +65,11 @@ function WeaveLines({
   const lines: { y: number; opacity: number }[] = [];
   const step = Math.max(2, height / 6);
   for (let ly = y + step / 2; ly < y + height; ly += step) {
-    lines.push({ y: ly, opacity: 0.06 + (Math.floor(ly) % 3) * 0.02 });
+    const bandMod = Math.floor(ly) % 4;
+    lines.push({
+      y: ly + (bandMod === 1 ? 0.2 : bandMod === 3 ? -0.15 : 0),
+      opacity: 0.05 + bandMod * 0.02,
+    });
   }
   return (
     <>
@@ -37,9 +80,11 @@ function WeaveLines({
           y1={line.y}
           x2={x + width}
           y2={line.y}
-          stroke="#1c1b19"
+          stroke="#211e1a"
           strokeOpacity={line.opacity}
-          strokeWidth={0.5}
+          strokeWidth={0.55}
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
         />
       ))}
     </>
@@ -65,6 +110,12 @@ function StripeBands({
             width={width}
             height={band.height}
             fill={band.color}
+          />
+          <WarpLines
+            x={0}
+            y={offsetY + band.y}
+            width={width}
+            height={band.height}
           />
           <WeaveLines
             x={0}
@@ -127,7 +178,7 @@ export function TextilePreview({
             y={0}
             width={previewWidth}
             height={totalHeight}
-            fill="#ffffff"
+            fill="#faf9f7"
           />
           <StripeBands bands={top.bands} width={previewWidth} offsetY={0} />
           <line
@@ -135,7 +186,7 @@ export function TextilePreview({
             y1={top.height}
             x2={previewWidth}
             y2={top.height}
-            stroke="#e5e3df"
+            stroke="#e8e6e3"
             strokeWidth={0.5}
             strokeDasharray="2 3"
           />

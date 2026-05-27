@@ -1,13 +1,13 @@
 :root {
-  --color-bg: #f7f6f4;
-  --color-surface: #ffffff;
-  --color-border: #e5e3df;
-  --color-border-strong: #d4d0c8;
+  --color-bg: #f7f6f3;
+  --color-surface: #fcfbfa;
+  --color-border: #e6e3de;
+  --color-border-strong: #d9d5ce;
   --color-text: #1c1b19;
-  --color-text-muted: #6b6760;
-  --color-text-subtle: #9a958c;
+  --color-text-muted: #6b6862;
+  --color-text-subtle: #92908a;
   --color-selected-ring: #1c1b19;
-  --color-callout-bg: #f0eeea;
+  --color-callout-bg: #f1f0ed;
 
   --font-sans: var(--font-inconsolata), ui-monospace, monospace;
   --font-heading: var(--font-quantico), system-ui, sans-serif;

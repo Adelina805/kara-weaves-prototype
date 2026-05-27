@@ -7,7 +7,9 @@
   min-height: 100dvh;
   overflow-x: hidden;
   overflow-y: visible;
-  background: var(--color-bg);
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.82), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(206, 202, 196, 0.1), transparent 60%),
+    var(--color-bg);
 }
 
 .sidebar {
@@ -20,7 +22,15 @@
   flex-direction: column;
   border-right: none;
   border-bottom: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 247, 244, 0.96)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(215, 212, 206, 0.06),
+      rgba(215, 212, 206, 0.06) 1px,
+      transparent 1px,
+      transparent 3px
+    );
   overflow: visible;
 }
 
