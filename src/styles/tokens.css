@@ -25,6 +25,10 @@
   --radius-md: 6px;
 
   --sidebar-width: 300px;
+  --sidebar-width-mobile: 100%;
   --spec-width: 240px;
   --max-width: 720px;
+
+  /* Layout breakpoint (match media queries in CSS modules) */
+  --breakpoint-md: 48rem;
 }

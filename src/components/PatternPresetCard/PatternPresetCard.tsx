@@ -18,16 +18,32 @@ function MiniStripePreview({
 }) {
   const thumbHeight = 32;
   const total = template.layers.reduce((s, l) => s + l.heightInches, 0);
-  let y = 0;
-  const segments = template.layers.map((layer, index, layers) => {
-    const isLast = index === layers.length - 1;
-    const h = isLast
-      ? thumbHeight - y
-      : (layer.heightInches / total) * thumbHeight;
-    const segment = { y, h, fill: resolveColor(layer.colorRole, colors) };
-    y += h;
-    return segment;
-  });
+
+  type Segment = { y: number; h: number; fill: string };
+  const { segments } = template.layers.reduce<{
+    segments: Segment[];
+    yCursor: number;
+  }>(
+    (state, layer, index) => {
+      const isLast = index === template.layers.length - 1;
+      const h = isLast
+        ? thumbHeight - state.yCursor
+        : (layer.heightInches / total) * thumbHeight;
+      return {
+        segments: [
+          ...state.segments,
+          {
+            y: state.yCursor,
+            h,
+            fill: resolveColor(layer.colorRole, colors),
+          },
+        ],
+        yCursor: state.yCursor + h,
+      };
+    },
+    { segments: [], yCursor: 0 },
+  );
+
   const bands = segments.map((seg, i) => (
     <rect
       key={i}

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inconsolata } from "next/font/google";
 import "./globals.css";
 
@@ -6,6 +6,11 @@ const inconsolata = Inconsolata({
   subsets: ["latin"],
   variable: "--font-inconsolata",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {

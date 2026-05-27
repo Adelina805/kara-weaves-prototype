@@ -84,3 +84,9 @@
   font-family: var(--font-mono);
   font-size: 0.8125rem;
 }
+
+@media (max-width: 48rem) {
+  .shell {
+    padding: var(--space-xl) var(--space-xl);
+  }
+}
