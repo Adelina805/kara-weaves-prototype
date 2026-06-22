@@ -8,6 +8,11 @@ const prototypes = [
     title: "Prototype 1",
     description: "Textile customization — template selection, live preview, spec generation.",
   },
+  {
+    href: "/prototype-2",
+    title: "Prototype 2",
+    description: "Direct stripe painting — choose color and width, then click the textile to edit.",
+  },
 ] as const;
 
 export default function HomePage() {
