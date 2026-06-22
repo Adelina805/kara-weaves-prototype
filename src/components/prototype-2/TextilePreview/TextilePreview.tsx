@@ -1,21 +1,27 @@
-import type { CSSProperties } from "react";
+"use client";
+
+import type { CSSProperties, MouseEvent } from "react";
 import type { Stripe } from "@/types/stripe-editor";
-import { GapZone, StripeLayer } from "@/components/prototype-2/StripeLayer/StripeLayer";
+import {
+  GRID_STEP_INCHES,
+  getStripeAt,
+  inchesFromPreviewY,
+  layoutStripeHeights,
+  snapToGrid,
+} from "@/utils/stripe-layout";
+import { StripeLayer } from "@/components/prototype-2/StripeLayer/StripeLayer";
 import styles from "./TextilePreview.module.css";
 
 const PREVIEW_WIDTH = 560;
-const GAP_HIT_HEIGHT = 12;
 
 type TextilePreviewProps = {
   stripes: Stripe[];
   canvasWidthInches: number;
   canvasHeightInches: number;
   hoveredStripeId: string | null;
-  hoveredGapIndex: number | null;
   onStripePaint: (stripeId: string) => void;
-  onGapInsert: (insertIndex: number) => void;
+  onCanvasPlace: (startInches: number) => void;
   onStripeHover: (stripeId: string | null) => void;
-  onGapHover: (insertIndex: number | null) => void;
 };
 
 function FixedWarpGrid({
@@ -52,41 +58,82 @@ function FixedWarpGrid({
   );
 }
 
+function HorizontalRowGrid({
+  width,
+  previewHeight,
+  canvasHeightInches,
+}: {
+  width: number;
+  previewHeight: number;
+  canvasHeightInches: number;
+}) {
+  const pixelsPerInch = previewHeight / canvasHeightInches;
+  const lines: number[] = [];
+
+  for (
+    let inches = GRID_STEP_INCHES;
+    inches < canvasHeightInches;
+    inches += GRID_STEP_INCHES
+  ) {
+    lines.push(inches * pixelsPerInch);
+  }
+
+  return (
+    <g aria-hidden pointerEvents="none">
+      {lines.map((y) => (
+        <line
+          key={y}
+          x1={0}
+          y1={y}
+          x2={width}
+          y2={y}
+          stroke="#1c1b19"
+          strokeOpacity={0.08}
+          strokeWidth={0.5}
+          vectorEffect="non-scaling-stroke"
+        />
+      ))}
+    </g>
+  );
+}
+
 export function TextilePreview({
   stripes,
   canvasWidthInches,
   canvasHeightInches,
   hoveredStripeId,
-  hoveredGapIndex,
   onStripePaint,
-  onGapInsert,
+  onCanvasPlace,
   onStripeHover,
-  onGapHover,
 }: TextilePreviewProps) {
   const previewHeight =
     PREVIEW_WIDTH * (canvasHeightInches / canvasWidthInches);
-  const pixelsPerInch = previewHeight / canvasHeightInches;
-
-  let currentY = 0;
-  const stripeLayouts = stripes.map((stripe) => {
-    const height = stripe.widthInches * pixelsPerInch;
-    const layout = { stripe, y: currentY, height };
-    currentY += height;
-    return layout;
-  });
+  const stripeLayouts = layoutStripeHeights(
+    stripes,
+    canvasHeightInches,
+    previewHeight
+  );
 
   const canvasStyle = {
     "--preview-width": `${PREVIEW_WIDTH}px`,
     "--preview-aspect-ratio": `${PREVIEW_WIDTH} / ${previewHeight}`,
   } as CSSProperties;
 
-  const gapZones: { insertIndex: number; y: number }[] = [
-    { insertIndex: 0, y: 0 },
-  ];
+  function handleCanvasClick(event: MouseEvent<SVGSVGElement>) {
+    const svg = event.currentTarget;
+    const rect = svg.getBoundingClientRect();
+    const scaleY = previewHeight / rect.height;
+    const clickY = (event.clientY - rect.top) * scaleY;
+    const inches = inchesFromPreviewY(clickY, previewHeight, canvasHeightInches);
+    const hit = getStripeAt(stripes, inches);
 
-  stripeLayouts.forEach(({ y, height }, index) => {
-    gapZones.push({ insertIndex: index + 1, y: y + height });
-  });
+    if (hit) {
+      onStripePaint(hit.id);
+      return;
+    }
+
+    onCanvasPlace(snapToGrid(inches));
+  }
 
   return (
     <div className={styles.wrap}>
@@ -98,6 +145,7 @@ export function TextilePreview({
           role="img"
           aria-label="Interactive woven stripe textile"
           preserveAspectRatio="xMidYMid meet"
+          onClick={handleCanvasClick}
         >
           <rect
             x={0}
@@ -105,6 +153,11 @@ export function TextilePreview({
             width={PREVIEW_WIDTH}
             height={previewHeight}
             fill="#faf9f7"
+          />
+          <HorizontalRowGrid
+            width={PREVIEW_WIDTH}
+            previewHeight={previewHeight}
+            canvasHeightInches={canvasHeightInches}
           />
           <FixedWarpGrid width={PREVIEW_WIDTH} height={previewHeight} />
 
@@ -118,31 +171,9 @@ export function TextilePreview({
               height={height}
               color={stripe.color}
               isHovered={hoveredStripeId === stripe.id}
-              onPaint={onStripePaint}
               onHover={onStripeHover}
             />
           ))}
-
-          {gapZones.map(({ insertIndex, y }) => {
-            const gapY =
-              insertIndex === 0
-                ? Math.max(0, y - GAP_HIT_HEIGHT / 2)
-                : y - GAP_HIT_HEIGHT / 2;
-
-            return (
-              <GapZone
-                key={`gap-${insertIndex}`}
-                x={0}
-                y={gapY}
-                width={PREVIEW_WIDTH}
-                height={GAP_HIT_HEIGHT}
-                insertIndex={insertIndex}
-                isHovered={hoveredGapIndex === insertIndex}
-                onInsert={onGapInsert}
-                onHover={onGapHover}
-              />
-            );
-          })}
         </svg>
       </figure>
     </div>

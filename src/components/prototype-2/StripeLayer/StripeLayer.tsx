@@ -6,7 +6,6 @@ type StripeLayerProps = {
   color: string;
   stripeId: string;
   isHovered: boolean;
-  onPaint: (stripeId: string) => void;
   onHover: (stripeId: string | null) => void;
 };
 
@@ -99,14 +98,12 @@ export function StripeLayer({
   color,
   stripeId,
   isHovered,
-  onPaint,
   onHover,
 }: StripeLayerProps) {
   return (
     <g
       onMouseEnter={() => onHover(stripeId)}
       onMouseLeave={() => onHover(null)}
-      onClick={() => onPaint(stripeId)}
       style={{ cursor: "pointer" }}
     >
       <rect
@@ -132,53 +129,6 @@ export function StripeLayer({
       )}
       <WarpLines x={x} y={y} width={width} height={height} />
       <WeaveLines x={x} y={y} width={width} height={height} />
-    </g>
-  );
-}
-
-type GapZoneProps = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  insertIndex: number;
-  isHovered: boolean;
-  onInsert: (insertIndex: number) => void;
-  onHover: (insertIndex: number | null) => void;
-};
-
-export function GapZone({
-  x,
-  y,
-  width,
-  height,
-  insertIndex,
-  isHovered,
-  onInsert,
-  onHover,
-}: GapZoneProps) {
-  return (
-    <g
-      onMouseEnter={() => onHover(insertIndex)}
-      onMouseLeave={() => onHover(null)}
-      onClick={() => onInsert(insertIndex)}
-      style={{ cursor: "crosshair" }}
-    >
-      <rect x={x} y={y} width={width} height={height} fill="transparent" />
-      {isHovered && (
-        <line
-          x1={x}
-          y1={y + height / 2}
-          x2={x + width}
-          y2={y + height / 2}
-          stroke="#1c1b19"
-          strokeOpacity={0.35}
-          strokeWidth={1.5}
-          strokeDasharray="3 2"
-          vectorEffect="non-scaling-stroke"
-          pointerEvents="none"
-        />
-      )}
     </g>
   );
 }

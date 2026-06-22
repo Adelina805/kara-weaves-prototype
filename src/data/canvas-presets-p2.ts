@@ -25,9 +25,9 @@ export const canvasPresetsP2: CanvasPreset[] = [
   {
     id: "furnishing",
     widthInches: 40,
-    heightInches: 70,
+    heightInches: 60,
     fabricLabel: "Furnishing Textile",
-    label: '40" × 70" — Furnishing Textile',
+    label: '40" × 60" — Furnishing Textile',
   },
 ];
 

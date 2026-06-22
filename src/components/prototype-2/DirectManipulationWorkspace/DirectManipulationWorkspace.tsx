@@ -10,9 +10,9 @@ import { defaultYarnSelections } from "@/data/yarn-colors";
 import type { StripeEditorState } from "@/types/stripe-editor";
 import {
   CONSTRAINT_MESSAGE,
-  createDefaultStripes,
-  insertStripeBetween,
-  paintStripeColor,
+  PLACEMENT_WARNING,
+  paintStripe,
+  placeStripeAt,
   scaleStripesForCanvas,
 } from "@/utils/stripe-layout";
 import { CanvasSelector } from "@/components/prototype-2/CanvasSelector/CanvasSelector";
@@ -26,7 +26,7 @@ const defaultCanvas = getCanvasPresetP2(defaultCanvasPresetIdP2)!;
 
 const initialState: StripeEditorState = {
   canvasPresetId: defaultCanvasPresetIdP2,
-  stripes: createDefaultStripes(defaultCanvas.heightInches),
+  stripes: [],
   brushColor: defaultYarnSelections.primary,
   brushWidth: 1,
 };
@@ -34,8 +34,7 @@ const initialState: StripeEditorState = {
 export function DirectManipulationWorkspace() {
   const [state, setState] = useState<StripeEditorState>(initialState);
   const [hoveredStripeId, setHoveredStripeId] = useState<string | null>(null);
-  const [hoveredGapIndex, setHoveredGapIndex] = useState<number | null>(null);
-
+  const [placementWarning, setPlacementWarning] = useState<string | null>(null);
   const canvas = useMemo(
     () => getCanvasPresetP2(state.canvasPresetId) ?? defaultCanvas,
     [state.canvasPresetId]
@@ -67,6 +66,7 @@ export function DirectManipulationWorkspace() {
                     nextCanvas.heightInches
                   ),
                 }));
+                setPlacementWarning(null);
               }}
             />
           </SidebarSection>
@@ -83,14 +83,20 @@ export function DirectManipulationWorkspace() {
           <SidebarSection label="Stripe Width">
             <StripeWidthControl
               value={state.brushWidth}
-              onChange={(brushWidth) =>
-                setState((current) => ({ ...current, brushWidth }))
-              }
+              onChange={(brushWidth) => {
+                setPlacementWarning(null);
+                setState((current) => ({ ...current, brushWidth }));
+              }}
             />
           </SidebarSection>
 
           <SidebarSection label="Constraints">
             <p className={styles.constraint}>{CONSTRAINT_MESSAGE}</p>
+            {placementWarning && (
+              <p className={styles.constraint} role="status">
+                {placementWarning}
+              </p>
+            )}
           </SidebarSection>
         </div>
       </aside>
@@ -101,30 +107,44 @@ export function DirectManipulationWorkspace() {
           canvasWidthInches={canvas.widthInches}
           canvasHeightInches={canvas.heightInches}
           hoveredStripeId={hoveredStripeId}
-          hoveredGapIndex={hoveredGapIndex}
           onStripeHover={setHoveredStripeId}
-          onGapHover={setHoveredGapIndex}
           onStripePaint={(stripeId) =>
-            setState((current) => ({
-              ...current,
-              stripes: paintStripeColor(
+            setState((current) => {
+              const nextStripes = paintStripe(
                 current.stripes,
                 stripeId,
-                current.brushColor
-              ),
-            }))
-          }
-          onGapInsert={(insertIndex) =>
-            setState((current) => ({
-              ...current,
-              stripes: insertStripeBetween(
-                current.stripes,
-                insertIndex,
                 current.brushColor,
                 current.brushWidth,
                 canvas.heightInches
-              ),
-            }))
+              );
+
+              if (nextStripes === current.stripes) {
+                setPlacementWarning(PLACEMENT_WARNING);
+                return current;
+              }
+
+              setPlacementWarning(null);
+              return { ...current, stripes: nextStripes };
+            })
+          }
+          onCanvasPlace={(startInches) =>
+            setState((current) => {
+              const nextStripes = placeStripeAt(
+                current.stripes,
+                startInches,
+                current.brushColor,
+                current.brushWidth,
+                canvas.heightInches
+              );
+
+              if (nextStripes === current.stripes) {
+                setPlacementWarning(PLACEMENT_WARNING);
+                return current;
+              }
+
+              setPlacementWarning(null);
+              return { ...current, stripes: nextStripes };
+            })
           }
         />
       </main>

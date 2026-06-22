@@ -1,6 +1,7 @@
 export type Stripe = {
   id: string;
   color: string;
+  startInches: number;
   widthInches: number;
 };
 
