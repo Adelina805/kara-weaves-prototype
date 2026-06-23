@@ -152,7 +152,7 @@ export function TextilePreview({
             y={0}
             width={PREVIEW_WIDTH}
             height={previewHeight}
-            fill="#faf9f7"
+            fill="#FFFFFF"
           />
           <HorizontalRowGrid
             width={PREVIEW_WIDTH}
